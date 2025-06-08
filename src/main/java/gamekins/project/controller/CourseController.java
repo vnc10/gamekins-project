@@ -34,13 +34,9 @@ public class CourseController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @RequestBody CourseDTO courseDTO) {
-        return courseService.findById(id)
-                .map(course -> {
-                    course.setName(courseDTO.getName());
-                    course.setCode(courseDTO.getCode());
-                    CourseDTO updatedCourse = courseService.create(course);
-                    return ResponseEntity.ok(updatedCourse);
-                }).orElse(ResponseEntity.notFound().build());
+        return courseService.update(id, courseDTO)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

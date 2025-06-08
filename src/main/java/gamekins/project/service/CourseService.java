@@ -6,6 +6,7 @@ import gamekins.project.mapper.CourseMapper;
 import gamekins.project.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,7 +29,11 @@ public class CourseService {
 
     public CourseDTO create(CourseDTO courseDTO) {
         Course course = CourseMapper.toEntity(courseDTO);
-        course = courseRepository.save(course);
+        try {
+            course = courseRepository.save(course);
+        } catch (Exception e) {
+            throw new RuntimeException("Course creation failed");
+        }
         return CourseMapper.toDTO(course);
     }
 
