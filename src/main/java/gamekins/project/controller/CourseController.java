@@ -1,6 +1,5 @@
 package gamekins.project.controller;
 
-import gamekins.project.domain.Course;
 import gamekins.project.domain.dto.CourseDTO;
 import gamekins.project.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +29,16 @@ public class CourseController {
 
     @PostMapping
     public CourseDTO createCourse(@RequestBody CourseDTO courseDTO) {
-        return courseService.save(courseDTO);
+        return courseService.create(courseDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course courseDetails) {
+    public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @RequestBody CourseDTO courseDTO) {
         return courseService.findById(id)
                 .map(course -> {
-                    course.setName(courseDetails.getName());
-                    course.setCode(courseDetails.getCode());
-                    Course updatedCourse = courseService.save(course);
+                    course.setName(courseDTO.getName());
+                    course.setCode(courseDTO.getCode());
+                    CourseDTO updatedCourse = courseService.create(course);
                     return ResponseEntity.ok(updatedCourse);
                 }).orElse(ResponseEntity.notFound().build());
     }

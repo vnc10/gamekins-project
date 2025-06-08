@@ -4,6 +4,7 @@ import gamekins.project.domain.Course;
 import gamekins.project.domain.Student;
 import gamekins.project.domain.dto.StudentDTO;
 import gamekins.project.mapper.StudentMapper;
+import gamekins.project.repository.CourseRepository;
 import gamekins.project.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,17 @@ public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private CourseRepository courseRepository;
 
     public List<StudentDTO> findAll() {
         return studentRepository.findAll().stream()
                 .map(StudentMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Optional<StudentDTO> findById(Long id) {
+        return studentRepository.findById(id).map(StudentMapper::toDTO);
     }
 
     public StudentDTO create(StudentDTO studentDTO) {

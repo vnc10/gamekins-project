@@ -1,10 +1,11 @@
 package gamekins.project.controller;
 
-import gamekins.project.domain.Subject;
+import gamekins.project.domain.dto.SubjectDTO;
 import gamekins.project.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -15,32 +16,27 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @GetMapping
-    public List<Subject> getAllSubjects() {
+    public List<SubjectDTO> getAllSubjects() {
         return subjectService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Subject> getSubjectById(@PathVariable Long id) {
+    public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable Long id) {
         return subjectService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Subject createSubject(@RequestBody Subject subject) {
-        return subjectService.save(subject);
+    public SubjectDTO createSubject(@RequestBody SubjectDTO subject) {
+        return subjectService.create(subject);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Subject> updateSubject(@PathVariable Long id, @RequestBody Subject subjectDetails) {
-        return subjectService.findById(id)
-                .map(subject -> {
-                    subject.setName(subjectDetails.getName());
-                    subject.setCode(subjectDetails.getCode());
-                    subject.setCourse(subjectDetails.getCourse());
-                    Subject updatedSubject = subjectService.save(subject);
-                    return ResponseEntity.ok(updatedSubject);
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<SubjectDTO> updateSubject(@PathVariable Long id, @RequestBody SubjectDTO subjectDetails) {
+        return subjectService.update(id, subjectDetails)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

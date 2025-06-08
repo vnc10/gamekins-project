@@ -9,5 +9,5 @@ public class SubjectDTO {
     private Long id;
     private String name;
     private String code;
-    private String courseName;
+    private Long courseId;
 }

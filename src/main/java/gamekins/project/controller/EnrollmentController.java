@@ -1,6 +1,6 @@
 package gamekins.project.controller;
 
-import gamekins.project.domain.Enrollment;
+import gamekins.project.domain.dto.EnrollmentDTO;
 import gamekins.project.service.EnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +15,20 @@ public class EnrollmentController {
     private EnrollmentService enrollmentService;
 
     @GetMapping
-    public List<Enrollment> getAllEnrollments() {
+    public List<EnrollmentDTO> getAllEnrollments() {
         return enrollmentService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Enrollment> getEnrollmentById(@PathVariable Long id) {
+    public ResponseEntity<EnrollmentDTO> getEnrollmentById(@PathVariable Long id) {
         return enrollmentService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Enrollment createEnrollment(@RequestBody Enrollment enrollment) {
-        return enrollmentService.save(enrollment);
+    public EnrollmentDTO createEnrollment(@RequestBody EnrollmentDTO enrollment) {
+        return enrollmentService.create(enrollment);
     }
 
     @DeleteMapping("/{id}")
