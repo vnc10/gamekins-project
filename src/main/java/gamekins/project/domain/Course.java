@@ -1,5 +1,6 @@
 package gamekins.project.domain;
 
+import gamekins.project.domain.dto.CourseDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,14 @@
 package gamekins.project.service;
 
 import gamekins.project.domain.Course;
+import gamekins.project.domain.dto.CourseDTO;
+import gamekins.project.mapper.CourseMapper;
 import gamekins.project.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -13,19 +16,36 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-    public List<Course> findAll() {
-        return courseRepository.findAll();
+    public List<CourseDTO> findAll() {
+        return courseRepository.findAll().stream()
+                .map(CourseMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Course> findById(Long id) {
-        return courseRepository.findById(id);
+    public Optional<CourseDTO> findById(Long id) {
+        return courseRepository.findById(id).map(CourseMapper::toDTO);
     }
 
-    public Course save(Course course) {
-        return courseRepository.save(course);
+    public CourseDTO create(CourseDTO courseDTO) {
+        Course course = CourseMapper.toEntity(courseDTO);
+        course = courseRepository.save(course);
+        return CourseMapper.toDTO(course);
     }
 
-    public void deleteById(Long id) {
-        courseRepository.deleteById(id);
+    public Optional<CourseDTO> update(Long id, CourseDTO courseDTO) {
+        return courseRepository.findById(id)
+                .map(existingCourse -> {
+                    CourseMapper.updateEntityFromDto(existingCourse, courseDTO);
+                    Course updatedCourse = courseRepository.save(existingCourse);
+                    return CourseMapper.toDTO(updatedCourse);
+                });
+    }
+
+    public boolean deleteById(Long id) {
+        if (courseRepository.existsById(id)) {
+            courseRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

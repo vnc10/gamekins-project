@@ -1,10 +1,12 @@
 package gamekins.project.controller;
 
 import gamekins.project.domain.Course;
+import gamekins.project.domain.dto.CourseDTO;
 import gamekins.project.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -15,20 +17,20 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping
-    public List<Course> getAllCourses() {
+    public List<CourseDTO> getAllCourses() {
         return courseService.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id) {
         return courseService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public Course createCourse(@RequestBody Course course) {
-        return courseService.save(course);
+    public CourseDTO createCourse(@RequestBody CourseDTO courseDTO) {
+        return courseService.save(courseDTO);
     }
 
     @PutMapping("/{id}")
