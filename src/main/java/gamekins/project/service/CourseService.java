@@ -46,11 +46,9 @@ public class CourseService {
                 });
     }
 
-    public boolean deleteById(Long id) {
+    public void deleteById(Long id) {
         if (courseRepository.existsById(id)) {
             courseRepository.deleteById(id);
-            return true;
         }
-        return false;
     }
 }

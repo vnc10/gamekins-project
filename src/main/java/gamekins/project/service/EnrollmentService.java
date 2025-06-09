@@ -51,11 +51,9 @@ public class EnrollmentService {
         return EnrollmentMapper.toDTO(enrollment);
     }
 
-    public boolean deleteById(Long id) {
+    public void deleteById(Long id) {
         if (enrollmentRepository.existsById(id)) {
             enrollmentRepository.deleteById(id);
-            return true;
         }
-        return false;
     }
 }

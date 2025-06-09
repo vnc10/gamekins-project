@@ -53,11 +53,9 @@ public class SubjectService {
                 });
     }
 
-    public boolean deleteById(Long id) {
+    public void deleteById(Long id) {
         if (subjectRepository.existsById(id)) {
             subjectRepository.deleteById(id);
-            return true;
         }
-        return false;
     }
 }
