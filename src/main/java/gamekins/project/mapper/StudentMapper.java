@@ -19,14 +19,9 @@ public final class StudentMapper {
         return dto;
     }
 
-    /**
-     * Converte um StudentDTO para uma nova entidade Student, recebendo a entidade Course já buscada.
-     */
     public static Student toEntity(StudentDTO dto, Course course) {
         Student student = new Student();
-        student.setName(dto.getName());
-        student.setRaNumber(dto.getRaNumber());
-        student.setCourse(course);
+        updateEntityFromDto(student, dto, course);
         return student;
     }
 

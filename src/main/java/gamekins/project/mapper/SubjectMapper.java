@@ -4,10 +4,6 @@ import gamekins.project.domain.Course;
 import gamekins.project.domain.Subject;
 import gamekins.project.domain.dto.SubjectDTO;
 
-/**
- * Classe final com métodos estáticos para mapear entre a entidade Subject e seus DTOs.
- * O construtor privado impede que a classe seja instanciada.
- */
 public final class SubjectMapper {
 
     private SubjectMapper() {}
@@ -25,9 +21,7 @@ public final class SubjectMapper {
 
     public static Subject toEntity(SubjectDTO dto, Course course) {
         Subject subject = new Subject();
-        subject.setName(dto.getName());
-        subject.setCode(dto.getCode());
-        subject.setCourse(course);
+        updateEntityFromDto(subject, dto, course);
         return subject;
     }
 

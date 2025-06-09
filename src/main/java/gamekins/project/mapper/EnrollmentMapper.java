@@ -23,9 +23,6 @@ public final class EnrollmentMapper {
         return dto;
     }
 
-    /**
-     * Cria uma nova entidade Enrollment a partir das entidades Student e Subject.
-     */
     public static Enrollment toEntity(Student student, Subject subject) {
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student);
