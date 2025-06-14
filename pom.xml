@@ -121,6 +121,26 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.9.10</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>1.1.0</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<outputFormats>
+						<outputFormat>XML</outputFormat>
+					</outputFormats>
+					<targetClasses>
+						<param>gamekins.*</param>
+					</targetClasses>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
